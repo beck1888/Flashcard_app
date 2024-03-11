@@ -2,7 +2,7 @@
 
 ## Requirements
 
-1. Create 20 flashcards. Each card has:
+1. Create **20 flashcards.** Each card has:
 
     - A text prompt that will be displayed to the user
 
