@@ -1,6 +1,8 @@
 # Development path
 
 1. Make some ( >= 20) flashcard on anything and save them to a file (`cards.json`) as a dictionary structure
+    - Flashcard set 1 theme: All about Mac flashcards (assuming a shell of .zsh and an m1 13 inch MacBook Pro 2020)
+
 
 2. Write some functions on `main.py` to:
     - Pretty display output
@@ -14,6 +16,7 @@
 
 5. Implement multiple decks
     - Update other code accordingly to allow for multiple decks
+    - Deck 2: Spanish quiz
 
 6. Allow user to select a flashcard deck
 
@@ -23,9 +26,14 @@
 
 8. Implement text fuzzing to make sure 'close enough' answers are accepted (i.e. misspellings)
     - Possibly add a button like "Override, I was correct"
+    - See if it is possible to use a class instead of a dictionary to add another attribute to see if the input is allowed to be 'fuzzed' (i.e. case sensitive name would be a no, but yes/no doesn't matter)
 
 9. Add sound effects with easy mute option
 
 10. ⭐️ Use tkinter to build a UI
+
+11. Push notification system to practice via Pushover api
+
+12. Add color to the text
 
 **Items with star emojis will earn extra credit as per `lesson.md`**
