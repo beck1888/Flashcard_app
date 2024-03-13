@@ -34,7 +34,7 @@ def next_card():
     for frame in frames:
         sys.stdout.write('\r' + frame)  # '\r' brings the cursor back to the start of the line
         sys.stdout.flush()  # Ensure the frame is displayed
-        time.sleep(0.15)  # Wait briefly before the next frame
+        time.sleep(0.2)  # Wait briefly before the next frame
 
     clear() # Reset the screen for the next flashcard
 
@@ -48,11 +48,31 @@ def show_cursor():
         sys.stdout.write('\033[?25h')
         sys.stdout.flush()
 
+def log_correct_or_incorrect(card_prompt, user_result):
+        if user_result.lower() == 'correct':
+            KEY_TO_FIND = f"CORRECT___{card_prompt}"
+        else:
+            KEY_TO_FIND = f"INCORRECT___{card_prompt}"
+
+        # Load the JSON data from the file tracking file to read
+        with open('progress_tracking.json', 'r') as file:
+            data = json.load(file)
+
+        # Check if the key exists and increment its value
+        if KEY_TO_FIND in data:
+            data[KEY_TO_FIND] += 1
+        else:
+            error(f"The key '{KEY_TO_FIND}' was not found in the dictionary.")
+
+        # Save the updated dictionary back to the JSON file (open in overwrite mode)
+        with open('progress_tracking.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
 ### Main function that runs the flashcards ###
 def run_flashcards():
     # Welcome screen
     clear()
-    input("Welcome to Beck's flashcard app!\n\nPress enter to begin...")
+    input("--------------------------------\nWelcome to Beck's flashcard app!\n--------------------------------\n\nPress enter to begin...")
     clear()
 
     ## Load in flashcards
@@ -63,16 +83,19 @@ def run_flashcards():
     ## Put flashcards in a random order
     flashcard_keys = list(flashcards.keys())
     random.shuffle(flashcard_keys)
-    
 
     ## Cycle through flashcards
     for card in flashcard_keys:
         usr_input = input(f"{card}\n--> ") # Show prompt and get input
         if usr_input == flashcards[card]: # Lookup correct answer and compare to the user's input
-            print("That is correct!\n")       
+            print("That is correct!\n")
+            log_correct_or_incorrect(card, 'correct')
         else:
             print(f"Sorry, the correct answer was {flashcards[card]}\n")
-        # Show a brief rest screen
+            log_correct_or_incorrect(card, 'incorrect')
+
+
+        # Show a brief rest screen (auto timed)
         print("Moving on shortly")
         next_card()
 
