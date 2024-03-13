@@ -8,11 +8,11 @@
     - ~~Pretty display output~~
     - ~~Easy way to deal with json~~
         - ~~Extract flashcard data~~
-        - Read/write flashcard stats
+        - ~~Read/write flashcard stats~~
 
 3. ~~In `main.py` make a simple program to go through the cards~~
 
-4. Start tracking correct/incorrect stats on all cards and save the data to `progress_tracking.json`
+4. ~~Start tracking correct/incorrect stats on all cards and save the data to `progress_tracking.json`~~
 
 5. Implement multiple decks
     - Update other code accordingly to allow for multiple decks
