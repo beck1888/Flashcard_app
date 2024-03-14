@@ -59,21 +59,14 @@ def log_correct_or_incorrect(card_prompt, user_result):
         # Remove accents
         card_prompt = remove_accents(card_prompt)
 
-        # Specify which key to log to based on user_result
+        with open('progress_tracking.json', 'r') as f:
+            data = json.load(f)
+
+        # Specify which key to log to based on user_result and increment by 1
         if user_result.lower() == 'correct':
-            KEY_TO_FIND = f"CORRECT___{card_prompt}"
+            data[card_prompt]['c'] += 1
         else:
-            KEY_TO_FIND = f"INCORRECT___{card_prompt}"
-
-        # Load the JSON data from the file tracking file to read
-        with open('progress_tracking.json', 'r') as file:
-            data = json.load(file)
-
-        # Check if the key exists and increment its value
-        if KEY_TO_FIND in data:
-            data[KEY_TO_FIND] += 1
-        else:
-            error(f"The key '{KEY_TO_FIND}' was not found in the dictionary.")
+            data[card_prompt]['i'] += 1
 
         # Save the updated dictionary back to the JSON file (open in overwrite mode)
         with open('progress_tracking.json', 'w') as file:
@@ -117,30 +110,30 @@ def show_user_stats():
         # elif data[f"CORRECT___{missed}"] == 0:
         #     exit("Not enough data to show stats!\n")
 
+        # Open the progress tracking file
+        with open('progress_tracking.json', 'r') as f:
+            stats = json.load(f)
         
         # Calculate the frequency the term is missed
-        incorrect_name = str(missed[10:]); incorrect_name = "INCORRECT___" + incorrect_name
-        correct_name = missed
+        for entry in stats:
+            # Get the nested dictionary for each prompt
+            entry_dict = stats[entry]
 
-        sum_of_tries = data[incorrect_name.replace('_____', '___')] + data[correct_name]
-        percent_wrong = data[incorrect_name] / sum_of_tries
-        percent_wrong = percent_wrong * 100
-        percent_wrong = round(percent_wrong, 3)
+            # Get correct/incorrect number from sub dict
+            correct_number = entry_dict["c"]
+            incorrect_number = entry_dict["i"]
 
-        # Print out the term and percent wrong
-        missed = str(missed).removeprefix("INCORRECT___")
-        show_wrong_cards = []
-        show_wrong_cards.append(f"> {missed_with_accents} | {percent_wrong}% wrong")
+            # Calculate the percentages
+            total_times_seen = correct_number + incorrect_number
+            percent_wrong = incorrect_number / total_times_seen
+            percent_wrong = percent_wrong * 100 # Format decimal to percent
+            percent_wrong = round(percent_wrong, 3) # Round for readability
+
+            # Add the term and percent wrong to print later
+            wrong_cards = []
+            wrong_cards.append(f"> {missed_with_accents} | {percent_wrong}% wrong")
         
-        # # Calculate frequency each card is incorrect
-        # wrong_cards = []
-        # for key in data:
-        #     key = str(key)
-        #     key = key.removeprefix("CORRECT___")
-        #     key = key.removeprefix("INCORRECT___")
-        #     print(key)
 
-    
     # Add space for visibility
     print("Here are the cards you get wrong the most often: ")
     for item in wrong_cards:
