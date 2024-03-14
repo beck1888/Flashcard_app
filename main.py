@@ -34,7 +34,7 @@ def next_card():
     for frame in frames:
         sys.stdout.write('\r' + frame)  # '\r' brings the cursor back to the start of the line
         sys.stdout.flush()  # Ensure the frame is displayed
-        time.sleep(0.1)  # Wait briefly before the next frame
+        time.sleep(0.03)  # Wait briefly before the next frame
 
     clear() # Reset the screen for the next flashcard
 
@@ -84,6 +84,11 @@ def show_user_stats():
     with open('progress_tracking.json', 'r') as file:
         data = json.load(file)
 
+    # Assign random dict values in test/dev mode to prevent 'not enough data' errors
+    testing_mode_on = True
+    if testing_mode_on is True:
+        data = {key: random.randint(30, 273) for key in data.keys()}
+
     # Get only the wrong keys from the dict
     new_dict = {}
     for key in data:
@@ -91,23 +96,46 @@ def show_user_stats():
             new_dict[key] = data[key]
 
     # Change the loaded dict 'key' to the new one (easier for naming)
-    del data
-    data = new_dict
+    data_new = new_dict
 
-    # Use the max() function on all the keys's values's to find the highest
-    highest_value = max(data.values())
+    # # Use the max() function on all the keys's values's to find the highest
+    # highest_value = max(data_new.values())
 
-    # Add all keys with that highest value to a list by iterating through all the keys
-    highest_keys = [key for key, value in data.items() if value == highest_value]
+    # # Add all keys with that highest value to a list by iterating through all the keys
+    # highest_keys = [key for key, value in data_new.items() if value == highest_value]
+
+    # Going show all keys. Replacing values with odd names for now to keep things working.
+    highest_keys = data
 
     # Display the most missed ones in an easy to see way
-    print("Here are the cards you get wrong the most often")
     for missed in highest_keys:
-        missed = put_accents_back_in(missed).removeprefix('INCORRECT___') # Gets rid of the 'INCORRECT___' used in tracking
-        print(f"> {missed}")
+        missed_with_accents = put_accents_back_in(missed)
+
+        # # Validate there is enough data to show stats (avoid dividing by 0)
+        # if data[f"INCORRECT___{missed}"] == 0:
+        #     exit("Not enough data to show stats!\n")
+        # elif data[f"CORRECT___{missed}"] == 0:
+        #     exit("Not enough data to show stats!\n")
+
+        # Calculate the frequency the term is missed
+        incorrect_name = str(missed[10:]); incorrect_name = "INCORRECT___" + incorrect_name
+        correct_name = missed
+
+        sum_of_tries = data[incorrect_name.replace('_____', '___')] + data[correct_name]
+        percent_wrong = data[incorrect_name] / sum_of_tries
+        percent_wrong = percent_wrong * 100
+        percent_wrong = round(percent_wrong, 3)
+
+        # Print out the term and percent wrong
+        missed = str(missed).removeprefix("INCORRECT___")
+        show_wrong_cards = []
+        show_wrong_cards.append(f"> {missed_with_accents} | {percent_wrong}% wrong")
     
     # Add space for visibility
-    print("\n\n")
+    print("Here are the cards you get wrong the most often: ")
+    for item in show_wrong_cards:
+        print(item)
+    print("\n")
 
 def put_accents_back_in(word):
     if word == 'rio':
@@ -208,7 +236,7 @@ def run_flashcards():
         print()
         next_card()
 
-    print("Good job! You've reviewed all flashcards.")
+    print("Good job! You've reviewed all the flashcards for this set.")
 
 if __name__ == '__main__':
     run_flashcards()
