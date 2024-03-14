@@ -79,6 +79,49 @@ def log_correct_or_incorrect(card_prompt, user_result):
         with open('progress_tracking.json', 'w') as file:
             json.dump(data, file, indent=4)
 
+def show_user_stats():
+    pass
+
+def reset_stats():
+    is_user_sure = input("Are you really sure you want to reset your stats (Yes/No)? ")
+    if is_user_sure == 'Yes':
+        erase_all_stats()
+    else:
+        print("Ok. Your stats are still saved.")
+
+def erase_all_stats():
+    # Open the JSON file and set 'data' to its dict
+    with open('progress_tracking.json', 'r') as file:
+        data = json.load(file)
+    
+    # Set all keys to 0
+    reset_dict = {key: 0 for key in data.keys()} # Go through each key and set it to 0
+    
+    # Set the whole file back to this version of the dict where all keys equal 0
+    with open('progress_tracking.json', 'w') as file:
+        json.dump(reset_dict, file, indent=4) # Dump data in proper formatting for json
+
+    print("Your user statistics have been reset!")
+    exit(0)
+
+
+def run_stats_screen():
+    clear("User statistics")
+    print("Please select an option:")
+    print("--> 1 - Show stats")
+    print("--> 2 - Reset stats")
+
+    stats_screen_user_option = input("\nType a number: ")
+    clear()
+
+    if stats_screen_user_option == '1':
+        show_user_stats()
+    elif stats_screen_user_option == '2':
+        reset_stats()
+    else:
+        exit("That is not a valid option")
+
+
 ### Main function that runs the flashcards ###
 def run_flashcards():
     # Welcome screen
@@ -87,6 +130,8 @@ def run_flashcards():
     print("Please choose a set to study by typing its number and pressing enter:")
     print("--> 1 - MacOS Terms")
     print("--> 2 - Spanish words")
+    print("\n--> Or type 0 to see statistics")
+
     deck_index = input("\nType a number: ")
     clear()
 
@@ -95,6 +140,9 @@ def run_flashcards():
         flashcard_filepath = 'flashcards_macos.json'
     elif deck_index == '2':
         flashcard_filepath = 'flashcards_spanish.json'
+    elif deck_index == '0':
+        run_stats_screen()
+        return None # Exits this function after showing the stats screen
     else:
         error("I don't have that set!")
 
@@ -123,7 +171,7 @@ def run_flashcards():
         print()
         next_card()
 
-    print("Good job! You've review all flashcards.")
+    print("Good job! You've reviewed all flashcards.")
 
 if __name__ == '__main__':
     run_flashcards()
