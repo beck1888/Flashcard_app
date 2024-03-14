@@ -72,11 +72,23 @@ def log_correct_or_incorrect(card_prompt, user_result):
 def run_flashcards():
     # Welcome screen
     clear()
-    input("--------------------------------\nWelcome to Beck's flashcard app!\n--------------------------------\n\nPress enter to begin...")
+    print("Welcome to Beck's flashcard app!\n")
+    print("Please choose a set to study by typing its number and pressing enter:")
+    print("--> 1 - MacOS Terms")
+    print("--> 2 - Spanish words")
+    deck_index = input("\nType a number: ")
     clear()
 
+    # Concert number to file path
+    if deck_index == '1':
+        flashcard_filepath = 'flashcards_macos.json'
+    elif deck_index == '2':
+        flashcard_filepath = 'flashcards_spanish.json'
+    else:
+        error("I don't have that set!")
+
     ## Load in flashcards
-    with open('flashcards.json', 'r') as file:
+    with open(flashcard_filepath, 'r') as file:
         # Loads its content into a Python dictionary
         flashcards = dict(json.load(file))
 
