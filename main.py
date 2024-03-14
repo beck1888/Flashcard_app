@@ -34,7 +34,7 @@ def next_card():
     for frame in frames:
         sys.stdout.write('\r' + frame)  # '\r' brings the cursor back to the start of the line
         sys.stdout.flush()  # Ensure the frame is displayed
-        time.sleep(0.2)  # Wait briefly before the next frame
+        time.sleep(0.1)  # Wait briefly before the next frame
 
     clear() # Reset the screen for the next flashcard
 
@@ -80,7 +80,44 @@ def log_correct_or_incorrect(card_prompt, user_result):
             json.dump(data, file, indent=4)
 
 def show_user_stats():
-    pass
+    # Open the json file and set its dict to 'data'
+    with open('progress_tracking.json', 'r') as file:
+        data = json.load(file)
+
+    # Get only the wrong keys from the dict
+    new_dict = {}
+    for key in data:
+        if key[:12] == 'INCORRECT___':
+            new_dict[key] = data[key]
+
+    # Change the loaded dict 'key' to the new one (easier for naming)
+    del data
+    data = new_dict
+
+    # Use the max() function on all the keys's values's to find the highest
+    highest_value = max(data.values())
+
+    # Add all keys with that highest value to a list by iterating through all the keys
+    highest_keys = [key for key, value in data.items() if value == highest_value]
+
+    # Display the most missed ones in an easy to see way
+    print("Here are the cards you get wrong the most often")
+    for missed in highest_keys:
+        missed = put_accents_back_in(missed).removeprefix('INCORRECT___') # Gets rid of the 'INCORRECT___' used in tracking
+        print(f"> {missed}")
+    
+    # Add space for visibility
+    print("\n\n")
+
+def put_accents_back_in(word):
+    if word == 'rio':
+        return 'río'
+    elif word == 'montana':
+        return 'montaña'
+    elif word == 'arbol':
+        return 'árbol'
+    else: # The correct spelling of thr word does not have accents
+        return word
 
 def reset_stats():
     is_user_sure = input("Are you really sure you want to reset your stats (Yes/No)? ")
