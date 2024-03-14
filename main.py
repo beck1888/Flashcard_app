@@ -117,6 +117,7 @@ def show_user_stats():
         # elif data[f"CORRECT___{missed}"] == 0:
         #     exit("Not enough data to show stats!\n")
 
+        
         # Calculate the frequency the term is missed
         incorrect_name = str(missed[10:]); incorrect_name = "INCORRECT___" + incorrect_name
         correct_name = missed
@@ -130,10 +131,19 @@ def show_user_stats():
         missed = str(missed).removeprefix("INCORRECT___")
         show_wrong_cards = []
         show_wrong_cards.append(f"> {missed_with_accents} | {percent_wrong}% wrong")
+        
+        # # Calculate frequency each card is incorrect
+        # wrong_cards = []
+        # for key in data:
+        #     key = str(key)
+        #     key = key.removeprefix("CORRECT___")
+        #     key = key.removeprefix("INCORRECT___")
+        #     print(key)
+
     
     # Add space for visibility
     print("Here are the cards you get wrong the most often: ")
-    for item in show_wrong_cards:
+    for item in wrong_cards:
         print(item)
     print("\n")
 
