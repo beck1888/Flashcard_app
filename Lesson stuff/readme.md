@@ -17,6 +17,7 @@
 5. Implement multiple decks
     - Update other code accordingly to allow for multiple decks
     - Deck 2: Spanish quiz
+    - **PLEASE NOTE:** we are now removing accents to store the words because of json conflicts with accented characters.
 
 6. Allow user to select a flashcard deck
 

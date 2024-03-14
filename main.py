@@ -48,7 +48,18 @@ def show_cursor():
         sys.stdout.write('\033[?25h')
         sys.stdout.flush()
 
+def remove_accents(the_accented_string):
+    s = the_accented_string
+    s = s.replace('á', 'a')
+    s = s.replace('í', 'i')
+    s = s.replace('ñ', 'n')
+    return s
+
 def log_correct_or_incorrect(card_prompt, user_result):
+        # Remove accents
+        card_prompt = remove_accents(card_prompt)
+
+        # Specify which key to log to based on user_result
         if user_result.lower() == 'correct':
             KEY_TO_FIND = f"CORRECT___{card_prompt}"
         else:
@@ -108,7 +119,8 @@ def run_flashcards():
 
 
         # Show a brief rest screen (auto timed)
-        print("Moving on shortly")
+        # print("Moving on shortly")
+        print()
         next_card()
 
     print("Good job! You've review all flashcards.")
