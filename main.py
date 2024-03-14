@@ -33,8 +33,8 @@ def next_card():
     # Write and overwrite the line with the current frame of the waiting to move-on screen
     for frame in frames:
         sys.stdout.write('\r' + frame)  # '\r' brings the cursor back to the start of the line
-        sys.stdout.flush()  # Ensure the frame is displayed
-        time.sleep(0.03)  # Wait briefly before the next frame
+        sys.stdout.flush() # Ensure the frame is displayed
+        time.sleep(0.25) # Wait briefly before the next frame
 
     clear() # Reset the screen for the next flashcard
 
@@ -77,42 +77,13 @@ def show_user_stats():
     with open('progress_tracking.json', 'r') as file:
         data = json.load(file)
 
-    # Assign random dict values in test/dev mode to prevent 'not enough data' errors
-    testing_mode_on = True
-    if testing_mode_on is True:
-        data = {key: random.randint(30, 273) for key in data.keys()}
-
-    # Get only the wrong keys from the dict
-    new_dict = {}
-    for key in data:
-        if key[:12] == 'INCORRECT___':
-            new_dict[key] = data[key]
-
-    # Change the loaded dict 'key' to the new one (easier for naming)
-    data_new = new_dict
-
-    # # Use the max() function on all the keys's values's to find the highest
-    # highest_value = max(data_new.values())
-
-    # # Add all keys with that highest value to a list by iterating through all the keys
-    # highest_keys = [key for key, value in data_new.items() if value == highest_value]
-
-    # Going show all keys. Replacing values with odd names for now to keep things working.
-    highest_keys = data
-
-    # Display the most missed ones in an easy to see way
-    for missed in highest_keys:
-        missed_with_accents = put_accents_back_in(missed)
-
-        # # Validate there is enough data to show stats (avoid dividing by 0)
-        # if data[f"INCORRECT___{missed}"] == 0:
-        #     exit("Not enough data to show stats!\n")
-        # elif data[f"CORRECT___{missed}"] == 0:
-        #     exit("Not enough data to show stats!\n")
-
         # Open the progress tracking file
         with open('progress_tracking.json', 'r') as f:
             stats = json.load(f)
+
+        # Create list
+        wrong_cards = []
+
         
         # Calculate the frequency the term is missed
         for entry in stats:
@@ -125,19 +96,23 @@ def show_user_stats():
 
             # Calculate the percentages
             total_times_seen = correct_number + incorrect_number
-            percent_wrong = incorrect_number / total_times_seen
-            percent_wrong = percent_wrong * 100 # Format decimal to percent
-            percent_wrong = round(percent_wrong, 3) # Round for readability
+            wrong_frequency = (incorrect_number / total_times_seen) * 100 # Turn into a percent
+
+            percent_wrong = str(round(wrong_frequency)) # Round for readability
+
+            # Reformat text
+            missed_with_accents = put_accents_back_in(entry)
+            spacer_start = " "*(3 - len(percent_wrong))
+            spacer_end = " "*(75 - len(missed_with_accents))
 
             # Add the term and percent wrong to print later
-            wrong_cards = []
-            wrong_cards.append(f"> {missed_with_accents} | {percent_wrong}% wrong")
+            wrong_cards.append(f"| {percent_wrong}%{spacer_start}| {missed_with_accents}{spacer_end} |")
         
 
     # Add space for visibility
-    print("Here are the cards you get wrong the most often: ")
+    print("Here's how often you get these cards wrong:\n")
     for item in wrong_cards:
-        print(item)
+        print(item) # Print wrong cards
     print("\n")
 
 def put_accents_back_in(word):
@@ -163,7 +138,10 @@ def erase_all_stats():
         data = json.load(file)
     
     # Set all keys to 0
-    reset_dict = {key: 0 for key in data.keys()} # Go through each key and set it to 0
+    reset_dict = {}
+    for key in data:
+        reset_dict[key] = {"c":0, "i":0}
+    # reset_dict = {key: 0 for key in data.keys()} # Go through each key and set it to 0
     
     # Set the whole file back to this version of the dict where all keys equal 0
     with open('progress_tracking.json', 'w') as file:
@@ -198,7 +176,7 @@ def run_flashcards():
     print("Please choose a set to study by typing its number and pressing enter:")
     print("--> 1 - MacOS Terms")
     print("--> 2 - Spanish words")
-    print("\n--> Or type 0 to see statistics")
+    print("\n--> Or type '0' to see statistics")
 
     deck_index = input("\nType a number: ")
     clear()
@@ -225,12 +203,12 @@ def run_flashcards():
 
     ## Cycle through flashcards
     for card in flashcard_keys:
-        usr_input = input(f"{card}\n--> ") # Show prompt and get input
+        usr_input = input(f"{card}\n\n--> ") # Show prompt and get input
         if usr_input == flashcards[card]: # Lookup correct answer and compare to the user's input
-            print("That is correct!\n")
+            print("\nThat is correct!\n")
             log_correct_or_incorrect(card, 'correct')
         else:
-            print(f"Sorry, the correct answer was {flashcards[card]}\n")
+            print(f"\nSorry, the correct answer was '{flashcards[card]}'\n")
             log_correct_or_incorrect(card, 'incorrect')
 
 
