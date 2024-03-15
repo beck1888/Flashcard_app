@@ -27,16 +27,10 @@
 
 ~~7. ⭐️ Update the 'home screen' in `main.py` that allows user to see stats or start review~~
 
-8. Implement text fuzzing to make sure 'close enough' answers are accepted (i.e. misspellings)
-    - Possibly add a button like "Override, I was correct"
-    - See if it is possible to use a class instead of a dictionary to add another attribute to see if the answer is allowed to be 'fuzzed' (i.e. case sensitive name would be a no, but yes/no doesn't matter)
+~~ 8. Implement text fuzzing to make sure 'close enough' answers are accepted (i.e. misspellings) ~~
 
 9. Add sound effects with easy mute option
 
 10. ⭐️ Use tkinter to build a UI
-
-11. Push notification system to practice via Pushover api
-
-12. Add color to the text
 
 **Items with star emojis will earn extra credit as per `lesson.md`**
