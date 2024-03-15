@@ -73,47 +73,68 @@ def log_correct_or_incorrect(card_prompt, user_result):
             json.dump(data, file, indent=4)
 
 def show_user_stats():
-    # Open the json file and set its dict to 'data'
+    # Open the json file and load its content to 'data'
     with open('progress_tracking.json', 'r') as file:
-        data = json.load(file)
+        stats = json.load(file)
 
-        # Open the progress tracking file
-        with open('progress_tracking.json', 'r') as f:
-            stats = json.load(f)
+    print("Here's how often you get these cards wrong:\n")
 
-        # Create list
-        wrong_cards = []
+    # Make a list to hold the data of percentage wrong and card info
+    wrong_cards_info = []
 
-        
-        # Calculate the frequency the term is missed
-        for entry in stats:
-            # Get the nested dictionary for each prompt
+    # Pick which cards to show
+    clear()
+    print("Pick a deck to see stats for:")
+    print("1) MacOS Terms")
+    print("2) Spanish\n")
+    deck = input("Type a deck's number: ")
+    clear("Here is how often you get these terms correct: \n")
+
+    # Know which type of deck to look at
+    if deck == '1':
+        deck_filter = "WD" # All MacOS Questions Start Like This
+        space_size = 75 # Tells the print functions below how much trailing whitespace to leave
+    elif deck == '2':
+        deck_filter = "abcdefghijklmnopqrstuvwxyzABCEFGHIJKLMNOPQRSTUVXYZ " # ABC's without Mac question's start with
+        space_size = 8
+    else:
+        error("Unknown deck!")
+
+
+    # Calculate the frequency the term is missed
+    for entry in stats:
+
+        # If the key matches the pattern
+        if str(entry)[0] in deck_filter:
+
             entry_dict = stats[entry]
 
-            # Get correct/incorrect number from sub dict
+            # Get correct/incorrect numbers from sub-dictionary
             correct_number = entry_dict["c"]
             incorrect_number = entry_dict["i"]
 
             # Calculate the percentages
             total_times_seen = correct_number + incorrect_number
-            wrong_frequency = (incorrect_number / total_times_seen) * 100 # Turn into a percent
+            wrong_frequency = (correct_number / total_times_seen) * 100
 
-            percent_wrong = str(round(wrong_frequency)) # Round for readability
-
-            # Reformat text
+            # Reformat text with accents
             missed_with_accents = put_accents_back_in(entry)
-            spacer_start = " "*(3 - len(percent_wrong))
-            spacer_end = " "*(75 - len(missed_with_accents))
 
-            # Add the term and percent wrong to print later
-            wrong_cards.append(f"| {percent_wrong}%{spacer_start}| {missed_with_accents}{spacer_end} |")
-        
+            # Add the term and percent wrong (as a tuple)
+            wrong_cards_info.append((wrong_frequency, missed_with_accents))
 
-    # Add space for visibility
-    print("Here's how often you get these cards wrong:\n")
-    for item in wrong_cards:
-        print(item) # Print wrong cards
-    print("\n")
+    # Sort the list by the percentage wrong in descending order
+    wrong_cards_info.sort(reverse=True, key=lambda x: x[0])
+
+    # Format and print each card
+    for percent_wrong, card in wrong_cards_info:
+        percent_wrong_str = f"{round(percent_wrong)}%"  # Round for readability
+        spacer_start = " " * (3 - len(percent_wrong_str))
+        spacer_end = " " * (space_size - len(card))
+        print(f"| {percent_wrong_str}{spacer_start} | {card}{spacer_end} |")
+
+    # Add a new line for readability from terminal entry line
+    print()
 
 def put_accents_back_in(word):
     if word == 'rio':
@@ -122,7 +143,7 @@ def put_accents_back_in(word):
         return 'montaña'
     elif word == 'arbol':
         return 'árbol'
-    else: # The correct spelling of thr word does not have accents
+    else: # The correct spelling of the word does not have accents
         return word
 
 def reset_stats():
