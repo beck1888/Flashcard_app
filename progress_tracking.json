@@ -1,82 +1,82 @@
 {
     "What language uses .py files?": {
-        "c": 2,
+        "c": 3,
         "i": 2
     },
     "What language uses .js files?": {
-        "c": 2,
-        "i": 1
+        "c": 3,
+        "i": 2
     },
     "What does .dmg stand for?": {
         "c": 1,
-        "i": 1
+        "i": 2
     },
     "What does CPU stand for?": {
         "c": 1,
-        "i": 1
+        "i": 2
     },
     "What equipment/software is responsible for converting urls to ip addresses?": {
-        "c": 9,
+        "c": 10,
         "i": 9
     },
     "What process does MacOS use to throttle overheating?": {
         "c": 9,
-        "i": 9
+        "i": 10
     },
     "What is the lead in for running a command as a super user?": {
-        "c": 8,
-        "i": 8
+        "c": 9,
+        "i": 9
     },
     "What is the web address for logging on to sign-on/public Wi-Fi?": {
-        "c": 8,
+        "c": 10,
         "i": 8
     },
     "What is the top level directory on a Mac?": {
-        "c": 7,
+        "c": 8,
         "i": 7
     },
     "What app opens when you press command + space at the same time?": {
         "c": 7,
-        "i": 1
+        "i": 2
     },
     "Does the Mac have a 'c drive' path?": {
         "c": 7,
-        "i": 6
+        "i": 7
     },
     "What is the default file system for macOS High Sierra and later?": {
         "c": 6,
-        "i": 6
+        "i": 7
     },
     "What utility is used to manage disks and storage on macOS?": {
         "c": 6,
-        "i": 5
+        "i": 7
     },
     "What is the first word of the command to evoke Homebrew via command line?": {
         "c": 1,
-        "i": 5
+        "i": 6
     },
     "What macOS feature allows you to run iPad and iPhone apps?": {
         "c": 5,
-        "i": 1
+        "i": 2
     },
     "What keyboard shortcut, using a single key, opens Launchpad?": {
-        "c": 12,
+        "c": 13,
         "i": 12
     },
     "What is the name of the macOS virtual desktop feature?": {
         "c": 12,
-        "i": 12
+        "i": 13
     },
     "What menu does Command + Option + Esc bring up?": {
         "c": 12,
-        "i": 12
+        "i": 13
     },
     "What is the macOS version name that introduced Dark Mode?": {
-        "c": 12,
+        "c": 13,
         "i": 1
     },
     "What is the name of the built-in encryption feature on macOS?": {
-        "c": 12,
+        "c": 13,
         "i": 12
     },
     "gato": {
@@ -96,7 +96,7 @@
         "i": 42
     },
     "arbol": {
-        "c": 1,
+        "c": 2,
         "i": 42
     },
     "coche": {
@@ -104,7 +104,7 @@
         "i": 59
     },
     "sol": {
-        "c": 59,
+        "c": 60,
         "i": 49
     },
     "luna": {

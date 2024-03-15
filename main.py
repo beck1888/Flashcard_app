@@ -16,7 +16,7 @@ def error(error_message=None):
         if error_message == 0:
             error("Impossible: an exit code of 0 (evoked) is used only for success, but 'error()' was called")
         else:
-            exit(error_message)
+            exit(error_message); print()
     else:
         exit(1)
 
@@ -98,7 +98,7 @@ def show_user_stats():
         deck_filter = "abcdefghijklmnopqrstuvwxyzABCEFGHIJKLMNOPQRSTUVXYZ " # ABC's without Mac question's start with
         space_size = 8
     else:
-        error("Unknown deck!")
+        error("Unknown deck!\n")
 
 
     # Calculate the frequency the term is missed
@@ -128,6 +128,9 @@ def show_user_stats():
 
     # Format and print each card
     for percent_wrong, card in wrong_cards_info:
+
+        # Format the card like how others are
+        card = str(card).capitalize()
         percent_wrong_str = f"{round(percent_wrong)}%"  # Round for readability
         spacer_start = " " * (3 - len(percent_wrong_str))
         spacer_end = " " * (space_size - len(card))
@@ -151,7 +154,7 @@ def reset_stats():
     if is_user_sure == 'Yes':
         erase_all_stats()
     else:
-        print("Ok. Your stats are still saved.")
+        print("Ok. Your stats are still saved.\n")
 
 def erase_all_stats():
     # Open the JSON file and set 'data' to its dict
@@ -168,7 +171,7 @@ def erase_all_stats():
     with open('progress_tracking.json', 'w') as file:
         json.dump(reset_dict, file, indent=4) # Dump data in proper formatting for json
 
-    print("Your user statistics have been reset!")
+    print("Your user statistics have been reset!\n")
     exit(0)
 
 
@@ -186,7 +189,7 @@ def run_stats_screen():
     elif stats_screen_user_option == '2':
         reset_stats()
     else:
-        exit("That is not a valid option")
+        exit("That is not a valid option\n")
 
 
 ### Main function that runs the flashcards ###
@@ -224,8 +227,17 @@ def run_flashcards():
 
     ## Cycle through flashcards
     for card in flashcard_keys:
+
+        # Format the card like how others are for printing
+        old_card = card
+        card = str(card).capitalize()
+
         usr_input = input(f"{card}\n\n--> ") # Show prompt and get input
-        if usr_input == flashcards[card]: # Lookup correct answer and compare to the user's input
+
+        # Set card back to how it was
+        card = old_card
+
+        if usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
             print("\nThat is correct!\n")
             log_correct_or_incorrect(card, 'correct')
         else:

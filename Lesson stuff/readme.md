@@ -25,7 +25,7 @@
 
 *Everything below this line is an add-on (not required in the assignment)*
 
-7. ⭐️ Update the 'home screen' in `main.py` that allows user to see stats or start review
+~~7. ⭐️ Update the 'home screen' in `main.py` that allows user to see stats or start review~~
 
 8. Implement text fuzzing to make sure 'close enough' answers are accepted (i.e. misspellings)
     - Possibly add a button like "Override, I was correct"
