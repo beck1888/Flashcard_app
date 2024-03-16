@@ -22,7 +22,15 @@ def error(error_message=None):
     else:
         exit(1)
 
-def next_card():
+def next_card(last_card_correctness):
+    # Choose how long to delay based on if card was right or wrong
+    if last_card_correctness == 'wrong':
+        delay = 0.55
+    elif last_card_correctness == 'right':
+        delay = 0.10
+    else:
+        exit(f"Bad option passed for last_card_correctness: {last_card_correctness}")
+
     hide_cursor()
 
     # Make frames of the waiting to move-on screen
@@ -36,7 +44,7 @@ def next_card():
     for frame in frames:
         sys.stdout.write('\r' + frame)  # '\r' brings the cursor back to the start of the line
         sys.stdout.flush() # Ensure the frame is displayed
-        time.sleep(0.25) # Wait briefly before the next frame
+        time.sleep(delay) # Wait briefly before the next frame, but show longer if was wrong
 
     clear() # Reset the screen for the next flashcard
 
@@ -220,7 +228,11 @@ def run_flashcards():
     # Concert number to file path
     if deck_index == '1':
         flashcard_filepath = 'flashcards_macos.json'
+        card_lead_in = ""
+        card_lead_out = ""
     elif deck_index == '2':
+        card_lead_in = "What is \""
+        card_lead_out = "\" in English?"
         flashcard_filepath = 'flashcards_spanish.json'
     elif deck_index == '0':
         run_stats_screen()
@@ -244,25 +256,26 @@ def run_flashcards():
         old_card = card
         card = str(card).capitalize()
 
-        usr_input = input(f"{card}\n\n--> ") # Show prompt and get input
+        usr_input = input(f"{card_lead_in}{card}{card_lead_out}\nYour answer: ") # Show prompt and get input
 
         # Set card back to how it was
         card = old_card
 
         if usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
-            print("\n- - - - - - - - - - - - - - -\n✅ That is correct!\n- - - - - - - - - - - - - - -")
+            print("- - - - - - - - - - - - - - -\n✅ That is correct!\n- - - - - - - - - - - - - - -")
             log_correct_or_incorrect(card, 'correct')
             sound('right', False)
+            result = 'right'
         else:
-            print(f"\n- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\nThe correct answer was '{flashcards[card]}'\n- - - - - - - - - - - - - - -")
+            print(f"- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\n\nThe correct answer was '{flashcards[card]}'\n- - - - - - - - - - - - - - -")
             log_correct_or_incorrect(card, 'incorrect')
             sound('wrong', False)
+            result = 'wrong'
 
 
         # Show a brief rest screen (auto timed)
         # print("Moving on shortly")
-        print()
-        next_card()
+        next_card(result)
 
     print("Good job! You've reviewed all the flashcards for this set.")
 
