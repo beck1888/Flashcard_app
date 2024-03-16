@@ -9,7 +9,7 @@
     },
     "What does .dmg stand for?": {
         "c": 1,
-        "i": 2
+        "i": 3
     },
     "What does CPU stand for?": {
         "c": 1,
@@ -36,11 +36,11 @@
         "i": 7
     },
     "What app opens when you press command + space at the same time?": {
-        "c": 9,
+        "c": 10,
         "i": 2
     },
     "Does the Mac have a 'c drive' path?": {
-        "c": 7,
+        "c": 8,
         "i": 7
     },
     "What is the default file system for macOS High Sierra and later?": {
@@ -80,7 +80,7 @@
         "i": 13
     },
     "gato": {
-        "c": 60,
+        "c": 61,
         "i": 1
     },
     "perro": {
@@ -121,7 +121,7 @@
     },
     "tierra": {
         "c": 39,
-        "i": 39
+        "i": 40
     },
     "cielo": {
         "c": 3,
@@ -136,7 +136,7 @@
         "i": 1
     },
     "flor": {
-        "c": 2,
+        "c": 3,
         "i": 2
     },
     "piedra": {

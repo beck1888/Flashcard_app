@@ -5,6 +5,7 @@ import time # Spacing flashcards automatically
 import sys # Editing line after being printed
 import random # Shuffle flashcards
 from playsound import playsound # Sound effects
+from settings import * # Import all settings from 'settings.py'
 
 ### Custom function definitions ###
 
@@ -59,14 +60,15 @@ def show_cursor():
         sys.stdout.flush()
 
 def sound(audio_short_title, hold=True):
-    name_to_filepath = {
-        "right":"sound/correct.mp3",
-        "wrong":"sound/wrong.mp3"
-    }
-    if hold is False:
-        playsound(name_to_filepath[audio_short_title], False)
-    else:
-        playsound(name_to_filepath[audio_short_title], True)
+    if play_sound_effects is True:
+        name_to_filepath = {
+            "right":"sound/correct.mp3",
+            "wrong":"sound/wrong.mp3"
+        }
+        if hold is False:
+            playsound(name_to_filepath[audio_short_title], False)
+        else:
+            playsound(name_to_filepath[audio_short_title], True)
 
 def remove_accents(the_accented_string):
     s = the_accented_string
@@ -216,11 +218,15 @@ def run_stats_screen():
 def run_flashcards():
     # Welcome screen
     clear()
-    print("Welcome to Beck's flashcard app!\n")
-    print("Please choose a set to study by typing its number and pressing enter:")
+    print("Welcome to Beck's flashcard app!")
+    if play_sound_effects is True:
+        print("[ 🔊 Sound effects are on ]")
+    else:
+        print("[ 🔇 Sound effects are muted ]")
+    print("\nPlease choose a set to study by typing its number and pressing enter:")
     print("--> 1 - MacOS Terms")
     print("--> 2 - Spanish words")
-    print("\n--> Or type '0' to see statistics")
+    print("--> Or type '0' to see statistics")
 
     deck_index = input("\nType a number: ")
     clear()
