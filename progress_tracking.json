@@ -4,7 +4,7 @@
         "i": 2
     },
     "What language uses .js files?": {
-        "c": 3,
+        "c": 4,
         "i": 2
     },
     "What does .dmg stand for?": {
@@ -24,7 +24,7 @@
         "i": 10
     },
     "What is the lead in for running a command as a super user?": {
-        "c": 9,
+        "c": 10,
         "i": 9
     },
     "What is the web address for logging on to sign-on/public Wi-Fi?": {
@@ -36,7 +36,7 @@
         "i": 7
     },
     "What app opens when you press command + space at the same time?": {
-        "c": 7,
+        "c": 8,
         "i": 2
     },
     "Does the Mac have a 'c drive' path?": {
@@ -45,7 +45,7 @@
     },
     "What is the default file system for macOS High Sierra and later?": {
         "c": 6,
-        "i": 7
+        "i": 8
     },
     "What utility is used to manage disks and storage on macOS?": {
         "c": 6,
@@ -77,7 +77,7 @@
     },
     "What is the name of the built-in encryption feature on macOS?": {
         "c": 13,
-        "i": 12
+        "i": 13
     },
     "gato": {
         "c": 59,
@@ -85,7 +85,7 @@
     },
     "perro": {
         "c": 1,
-        "i": 59
+        "i": 60
     },
     "libro": {
         "c": 59,
@@ -116,7 +116,7 @@
         "i": 1
     },
     "fuego": {
-        "c": 39,
+        "c": 42,
         "i": 39
     },
     "tierra": {
@@ -124,11 +124,11 @@
         "i": 39
     },
     "cielo": {
-        "c": 2,
+        "c": 3,
         "i": 39
     },
     "mar": {
-        "c": 1,
+        "c": 2,
         "i": 39
     },
     "estrella": {
@@ -157,6 +157,6 @@
     },
     "nube": {
         "c": 4,
-        "i": 2
+        "i": 3
     }
 }

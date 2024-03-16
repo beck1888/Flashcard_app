@@ -1,0 +1,10 @@
+Thank you to the following creators for their sounds used in this project.
+All sounds in this project have been licensed for non-commercial use.
+
+** All sounds are stored in the 'sound' folder at the project root **
+
+SOUND NAME ---------------------- URL
+
+correct.mp3                       https://freesound.org/people/StavSounds/sounds/546083/
+
+incorrect.mp3                     https://freesound.org/people/Bertrof/sounds/131657/

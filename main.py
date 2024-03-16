@@ -4,8 +4,10 @@ import subprocess # Clearing the console/terminal
 import time # Spacing flashcards automatically
 import sys # Editing line after being printed
 import random # Shuffle flashcards
+from playsound import playsound # Sound effects
 
 ### Custom function definitions ###
+
 def clear(message_after_refresh=None):
     subprocess.run("clear", shell=False)
     if message_after_refresh is not None:
@@ -47,6 +49,16 @@ def hide_cursor():
 def show_cursor():
         sys.stdout.write('\033[?25h')
         sys.stdout.flush()
+
+def sound(audio_short_title, hold=True):
+    name_to_filepath = {
+        "right":"sound/correct.mp3",
+        "wrong":"sound/wrong.mp3"
+    }
+    if hold is False:
+        playsound(name_to_filepath[audio_short_title], False)
+    else:
+        playsound(name_to_filepath[audio_short_title], True)
 
 def remove_accents(the_accented_string):
     s = the_accented_string
@@ -238,11 +250,13 @@ def run_flashcards():
         card = old_card
 
         if usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
-            print("\nThat is correct!\n")
+            print("\n- - - - - - - - - - - - - - -\n✅ That is correct!\n- - - - - - - - - - - - - - -")
             log_correct_or_incorrect(card, 'correct')
+            sound('right', False)
         else:
-            print(f"\nSorry, the correct answer was '{flashcards[card]}'\n")
+            print(f"\n- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\nThe correct answer was '{flashcards[card]}'\n- - - - - - - - - - - - - - -")
             log_correct_or_incorrect(card, 'incorrect')
+            sound('wrong', False)
 
 
         # Show a brief rest screen (auto timed)
