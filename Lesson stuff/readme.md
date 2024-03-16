@@ -29,7 +29,7 @@
 
 ~~ 8. Implement text fuzzing to make sure 'close enough' answers are accepted (i.e. misspellings) ~~
 
-9. Add sound effects with easy mute option
+~~9. Add sound effects with easy mute option~~
 
 10. ⭐️ Use tkinter to build a UI
 
