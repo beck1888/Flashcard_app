@@ -1,1 +1,2 @@
-play_sound_effects = False
+play_sound_effects = True
+testing_mode = True

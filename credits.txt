@@ -8,3 +8,8 @@ SOUND NAME ---------------------- URL
 correct.mp3                       https://freesound.org/people/StavSounds/sounds/546083/
 
 incorrect.mp3                     https://freesound.org/people/Bertrof/sounds/131657/
+
+beep.mp3                          https://freesound.org/people/jobro/sounds/33782/
+
+end.wav                           https://freesound.org/people/Unlistenable/sounds/391539/
+

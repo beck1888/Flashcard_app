@@ -1,7 +1,7 @@
 ## Imports
 import json # Reading flashcards and writing statistics data
 import subprocess # Clearing the console/terminal
-import time # Spacing flashcards automatically
+import time # Spacing flashcards automatically, calculate time taken to view cards
 import sys # Editing line after being printed
 import random # Shuffle flashcards
 from playsound import playsound # Sound effects
@@ -29,6 +29,9 @@ def next_card(last_card_correctness):
         delay = 0.55
     elif last_card_correctness == 'right':
         delay = 0.10
+    elif last_card_correctness == 'skip' and testing_mode is True:
+        clear()
+        return None
     else:
         exit(f"Bad option passed for last_card_correctness: {last_card_correctness}")
 
@@ -63,7 +66,9 @@ def sound(audio_short_title, hold=True):
     if play_sound_effects is True:
         name_to_filepath = {
             "right":"sound/correct.mp3",
-            "wrong":"sound/wrong.mp3"
+            "wrong":"sound/wrong.mp3",
+            "beep":"sound/beep.wav",
+            "end":"sound/end.wav"
         }
         if hold is False:
             playsound(name_to_filepath[audio_short_title], False)
@@ -218,6 +223,9 @@ def run_stats_screen():
 def run_flashcards():
     # Welcome screen
     clear()
+    if testing_mode is True:
+        print("[🛠️ DEV MODE IS ON]")
+
     print("Welcome to Beck's flashcard app!")
     if play_sound_effects is True:
         print("[ 🔊 Sound effects are on ]")
@@ -226,12 +234,12 @@ def run_flashcards():
     print("\nPlease choose a set to study by typing its number and pressing enter:")
     print("--> 1 - MacOS Terms")
     print("--> 2 - Spanish words")
-    print("--> Or type '0' to see statistics")
+    print("--> Or type 'stats' to see statistics")
 
     deck_index = input("\nType a number: ")
     clear()
 
-    # Concert number to file path
+    # Convert number to file path
     if deck_index == '1':
         flashcard_filepath = 'flashcards_macos.json'
         card_lead_in = ""
@@ -240,7 +248,7 @@ def run_flashcards():
         card_lead_in = "What is \""
         card_lead_out = "\" in English?"
         flashcard_filepath = 'flashcards_spanish.json'
-    elif deck_index == '0':
+    elif deck_index == 'stats':
         run_stats_screen()
         return None # Exits this function after showing the stats screen
     else:
@@ -255,6 +263,12 @@ def run_flashcards():
     flashcard_keys = list(flashcards.keys())
     random.shuffle(flashcard_keys)
 
+    # Initialize score dict
+    score = {'c':0, 's':0} # S stands for number of cards seen
+
+    # Record the start time
+    start_time = time.time()
+
     ## Cycle through flashcards
     for card in flashcard_keys:
 
@@ -267,13 +281,20 @@ def run_flashcards():
         # Set card back to how it was
         card = old_card
 
-        if usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
+        if usr_input == "" and testing_mode is True: # Skip with dev mode on
+            # Code to skip faster when testing w/o logging
+            sound('beep', False)
+            result = 'skip'
+        elif usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
             print("- - - - - - - - - - - - - - -\n✅ That is correct!\n- - - - - - - - - - - - - - -")
+            score['c'] += 1
+            score['s'] += 1
             log_correct_or_incorrect(card, 'correct')
             sound('right', False)
             result = 'right'
         else:
-            print(f"- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\n\nThe correct answer was '{flashcards[card]}'\n- - - - - - - - - - - - - - -")
+            print(f"- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\n\nThe correct answer was '{flashcards[card]}'.\n- - - - - - - - - - - - - - -")
+            score['s'] += 1
             log_correct_or_incorrect(card, 'incorrect')
             sound('wrong', False)
             result = 'wrong'
@@ -283,7 +304,32 @@ def run_flashcards():
         # print("Moving on shortly")
         next_card(result)
 
-    print("Good job! You've reviewed all the flashcards for this set.")
+    end_time = time.time()
+
+    score_dict = score
+    clear()
+    time.sleep(1.5) # Allow any sounds to finish playing
+    print("🏆 Good job! You've reviewed all the flashcards for this set.")
+    score = score['c'] / score['s']
+    score = round(score, 2)
+    score = score * 100
+    score = str(score)
+    correct = score_dict['c']
+    total = score_dict['s']
+    print(f"\n🎯 Accuracy: {score}% ({correct}/{total})")
+    time_taken = end_time - start_time
+    time_taken_formatted = ""
+    mins = time_taken // 60
+    seconds = time_taken % 60
+    mins = str(round(mins))
+    seconds = str(round(seconds))
+    if mins == '0':
+        time_taken_formatted = f"{seconds} seconds"
+    else:
+        time_taken_formatted = f"{mins} minutes and {seconds} seconds"
+    print(f"🕗 Time taken: {time_taken_formatted}\n\n")
+    sound('end')
+
 
 if __name__ == '__main__':
     run_flashcards()

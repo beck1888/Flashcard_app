@@ -31,6 +31,4 @@
 
 ~~9. Add sound effects with easy mute option~~
 
-10. ⭐️ Use tkinter to build a UI
-
 **Items with star emojis will earn extra credit as per `lesson.md`**
