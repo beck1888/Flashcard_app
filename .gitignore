@@ -3,3 +3,4 @@ __pycache__
 testpage.py
 Docs
 gui.py
+text_to_speech.py
