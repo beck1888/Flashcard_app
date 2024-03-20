@@ -104,7 +104,6 @@ def show_user_stats():
     with open('progress_tracking.json', 'r') as file:
         stats = json.load(file)
 
-    print("Here's how often you get these cards wrong:\n")
 
     # Make a list to hold the data of percentage wrong and card info
     wrong_cards_info = []
@@ -120,7 +119,7 @@ def show_user_stats():
     # Know which type of deck to look at
     if deck == '1':
         deck_filter = "WD" # All MacOS Questions Start Like This
-        space_size = 75 # Tells the print functions below how much trailing whitespace to leave
+        space_size = 78 # Tells the print functions below how much trailing whitespace to leave
     elif deck == '2':
         deck_filter = "abcdefghijklmnopqrstuvwxyzABCEFGHIJKLMNOPQRSTUVXYZ " # ABC's without Mac question's start with
         space_size = 8
@@ -129,7 +128,7 @@ def show_user_stats():
 
 
     # Calculate the frequency the term is missed
-    for entry in stats:
+    for entry in stats: # Percent wrong means percent right - it's misnamed
 
         # If the key matches the pattern
         if str(entry)[0] in deck_filter:
@@ -140,15 +139,18 @@ def show_user_stats():
             correct_number = entry_dict["c"]
             incorrect_number = entry_dict["i"]
 
-            # Calculate the percentages
-            total_times_seen = correct_number + incorrect_number
-            wrong_frequency = (correct_number / total_times_seen) * 100
+            if correct_number + incorrect_number == 0: # Provides divide by 0 protection
+                pass # Skip calculating and including the cards with no data
+            else: # Most cases where at least one data point exists for right and wrong
+                # Calculate the percentages
+                total_times_seen = correct_number + incorrect_number
+                wrong_frequency = (correct_number / total_times_seen) * 100
 
-            # Reformat text with accents
-            missed_with_accents = put_accents_back_in(entry)
+                # Reformat text with accents
+                missed_with_accents = put_accents_back_in(entry)
 
-            # Add the term and percent wrong (as a tuple)
-            wrong_cards_info.append((wrong_frequency, missed_with_accents))
+                # Add the term and percent wrong (as a tuple)
+                wrong_cards_info.append((wrong_frequency, missed_with_accents))
 
     # Sort the list by the percentage wrong in descending order
     wrong_cards_info.sort(reverse=True, key=lambda x: x[0])
@@ -159,7 +161,7 @@ def show_user_stats():
         # Format the card like how others are
         card = str(card).capitalize()
         percent_wrong_str = f"{round(percent_wrong)}%"  # Round for readability
-        spacer_start = " " * (3 - len(percent_wrong_str))
+        spacer_start = " " * (4 - len(percent_wrong_str))
         spacer_end = " " * (space_size - len(card))
         print(f"| {percent_wrong_str}{spacer_start} | {card}{spacer_end} |")
 
@@ -203,7 +205,7 @@ def erase_all_stats():
 
 
 def run_stats_screen():
-    clear("User statistics")
+    clear("User statistics\n")
     print("Please select an option:")
     print("--> 1 - Show stats")
     print("--> 2 - Reset stats")
@@ -221,6 +223,7 @@ def run_stats_screen():
 
 ### Main function that runs the flashcards ###
 def run_flashcards():
+    show_cursor() # Shows the cursor in case it got disabled during keyboard interrupt
     # Welcome screen
     clear()
     if testing_mode is True:
