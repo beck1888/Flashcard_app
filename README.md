@@ -23,3 +23,5 @@ Goal: Design a flashcard app that shows a set of flashcards and and asks for the
 ## Known issues
 
 - Misspellings are still marked as wrong
+
+*The project proposal can be found in* `Lesson stuff/project_readme.md`
