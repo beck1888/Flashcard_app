@@ -41,7 +41,7 @@
     },
     "Does the Mac have a 'c drive' path?": {
         "c": 12,
-        "i": 10
+        "i": 11
     },
     "What is the default file system for macOS High Sierra and later?": {
         "c": 6,
@@ -53,7 +53,7 @@
     },
     "What is the first word of the command to evoke Homebrew via command line?": {
         "c": 4,
-        "i": 6
+        "i": 7
     },
     "What macOS feature allows you to run iPad and iPhone apps?": {
         "c": 5,
@@ -88,7 +88,7 @@
         "i": 60
     },
     "libro": {
-        "c": 64,
+        "c": 65,
         "i": 59
     },
     "casa": {
@@ -108,7 +108,7 @@
         "i": 49
     },
     "luna": {
-        "c": 53,
+        "c": 54,
         "i": 49
     },
     "agua": {
@@ -133,7 +133,7 @@
     },
     "estrella": {
         "c": 42,
-        "i": 3
+        "i": 4
     },
     "flor": {
         "c": 7,
@@ -148,7 +148,7 @@
         "i": 2
     },
     "montana": {
-        "c": 4,
+        "c": 5,
         "i": 4
     },
     "bosque": {

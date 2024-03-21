@@ -6,6 +6,7 @@ import sys # Editing line after being printed
 import random # Shuffle flashcards
 from playsound import playsound # Sound effects
 from settings import * # Import all settings from 'settings.py'
+from text_to_speech import narrate as say # Multi-lingual voice to speak cards and results (hosted in project directory)
 
 ### Custom function definitions ###
 def clear(message_after_refresh=None):
