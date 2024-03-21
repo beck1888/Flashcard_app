@@ -8,7 +8,6 @@ from playsound import playsound # Sound effects
 from settings import * # Import all settings from 'settings.py'
 
 ### Custom function definitions ###
-
 def clear(message_after_refresh=None):
     subprocess.run("clear", shell=False)
     if message_after_refresh is not None:
@@ -26,22 +25,22 @@ def error(error_message=None):
 def next_card(last_card_correctness):
     # Choose how long to delay based on if card was right or wrong
     if last_card_correctness == 'wrong':
-        delay = 0.55
+        delay = 0.13
     elif last_card_correctness == 'right':
-        delay = 0.10
+        delay = 0.02
     elif last_card_correctness == 'skip' and testing_mode is True:
         clear()
         return None
     else:
         exit(f"Bad option passed for last_card_correctness: {last_card_correctness}")
 
-    hide_cursor()
+    # hide_cursor()
 
     # Make frames of the waiting to move-on screen
     frames = []
-    for filled_in in range (11):
-        blank = 10 - filled_in
-        current_frame = "■ "*filled_in + "□ "*blank
+    for filled_in in range (31): # Same length as the screen bar
+        blank = 30 - filled_in
+        current_frame = "■"*filled_in + "□"*blank
         frames.append(current_frame[:-1])
 
     # Write and overwrite the line with the current frame of the waiting to move-on screen
@@ -284,11 +283,13 @@ def run_flashcards():
         # Set card back to how it was
         card = old_card
 
+        show_cursor() # Faster updates
         if usr_input == "" and testing_mode is True: # Skip with dev mode on
             # Code to skip faster when testing w/o logging
             sound('beep', False)
             result = 'skip'
         elif usr_input.lower().replace(" ", "") == str(flashcards[card]).lower(): # Lookup correct answer and compare to the user's input, auto match caps and spaces
+            hide_cursor() # Faster updates
             print("- - - - - - - - - - - - - - -\n✅ That is correct!\n- - - - - - - - - - - - - - -")
             score['c'] += 1
             score['s'] += 1
@@ -296,6 +297,7 @@ def run_flashcards():
             sound('right', False)
             result = 'right'
         else:
+            hide_cursor()
             print(f"- - - - - - - - - - - - - - -\n❌ Sorry, that's not right.\n\nThe correct answer was '{flashcards[card]}'.\n- - - - - - - - - - - - - - -")
             score['s'] += 1
             log_correct_or_incorrect(card, 'incorrect')
