@@ -230,10 +230,15 @@ def run_flashcards():
         print("[🛠️ DEV MODE IS ON]")
 
     print("Welcome to Beck's flashcard app!")
-    if play_sound_effects is True:
-        print("[ 🔊 Sound effects are on ]")
-    else:
-        print("[ 🔇 Sound effects are muted ]")
+    if play_sound_effects is True and speak_cards is True:
+        print("[ 🔊 Sound effects on | 🗣️ Speak cards on ]")
+    elif play_sound_effects is True and speak_cards is False:
+        print("[ 🔊 Sound effects on | 🗣️ Speak cards off ]")
+    elif play_sound_effects is False and speak_cards is True:
+        print("[ 🔇 Sound effects muted | 🗣️ Speak cards on ]")
+    else: # Both False
+        print("[ 🔇 Sound effects muted | 🗣️ Speak cards off ]")
+
     print("\nPlease choose a set to study by typing its number and pressing enter:")
     print("--> 1 - MacOS Terms")
     print("--> 2 - Spanish words")
@@ -241,6 +246,8 @@ def run_flashcards():
 
     deck_index = input("\nType a number: ")
     clear()
+
+    lang = "english"
 
     # Convert number to file path
     if deck_index == '1':
@@ -251,11 +258,14 @@ def run_flashcards():
         card_lead_in = "What is \""
         card_lead_out = "\" in English?"
         flashcard_filepath = 'flashcards_spanish.json'
+        lang = 'spanish'
     elif deck_index == 'stats':
         run_stats_screen()
         return None # Exits this function after showing the stats screen
     else:
         error("I don't have that set!")
+
+
 
     ## Load in flashcards
     with open(flashcard_filepath, 'r') as file:
@@ -279,10 +289,18 @@ def run_flashcards():
         old_card = card
         card = str(card).capitalize()
 
-        usr_input = input(f"{card_lead_in}{card}{card_lead_out}\nYour answer: ") # Show prompt and get input
+        print(f"{card_lead_in}{card}{card_lead_out}")
+
+        # Speak card (setting logic in other file)
+        card = card.removesuffix("\" in English?")
+        card = card.removeprefix("What is \"")
+        say(card, lang)
+
+        usr_input = input(f"Your answer: ") # Show prompt and get input
 
         # Set card back to how it was
         card = old_card
+
 
         show_cursor() # Faster updates
         if usr_input == "" and testing_mode is True: # Skip with dev mode on

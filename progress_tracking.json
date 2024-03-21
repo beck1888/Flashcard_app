@@ -9,14 +9,14 @@
     },
     "What does .dmg stand for?": {
         "c": 1,
-        "i": 0
+        "i": 1
     },
     "What does CPU stand for?": {
         "c": 1,
-        "i": 5
+        "i": 6
     },
     "What equipment/software is responsible for converting urls to ip addresses?": {
-        "c": 15,
+        "c": 16,
         "i": 10
     },
     "What process does MacOS use to throttle overheating?": {
@@ -24,7 +24,7 @@
         "i": 12
     },
     "What is the lead in for running a command as a super user?": {
-        "c": 12,
+        "c": 13,
         "i": 9
     },
     "What is the web address for logging on to sign-on/public Wi-Fi?": {
@@ -32,7 +32,7 @@
         "i": 8
     },
     "What is the top level directory on a Mac?": {
-        "c": 10,
+        "c": 11,
         "i": 7
     },
     "What app opens when you press command + space at the same time?": {
@@ -41,7 +41,7 @@
     },
     "Does the Mac have a 'c drive' path?": {
         "c": 12,
-        "i": 11
+        "i": 12
     },
     "What is the default file system for macOS High Sierra and later?": {
         "c": 6,
@@ -57,19 +57,19 @@
     },
     "What macOS feature allows you to run iPad and iPhone apps?": {
         "c": 5,
-        "i": 3
+        "i": 4
     },
     "What keyboard shortcut, using a single key, opens Launchpad?": {
-        "c": 14,
+        "c": 15,
         "i": 13
     },
     "What is the name of the macOS virtual desktop feature?": {
         "c": 12,
-        "i": 13
+        "i": 15
     },
     "What menu does Command + Option + Esc bring up?": {
         "c": 12,
-        "i": 14
+        "i": 15
     },
     "What is the macOS version name that introduced Dark Mode?": {
         "c": 13,
@@ -88,11 +88,11 @@
         "i": 60
     },
     "libro": {
-        "c": 65,
+        "c": 66,
         "i": 59
     },
     "casa": {
-        "c": 46,
+        "c": 47,
         "i": 42
     },
     "arbol": {
@@ -128,7 +128,7 @@
         "i": 39
     },
     "mar": {
-        "c": 5,
+        "c": 6,
         "i": 39
     },
     "estrella": {
@@ -157,6 +157,6 @@
     },
     "nube": {
         "c": 6,
-        "i": 7
+        "i": 8
     }
 }
