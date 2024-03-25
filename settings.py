@@ -1,5 +1,5 @@
 play_sound_effects = True
 
-speak_cards = True
+speak_cards = False
 
-testing_mode = False # Turned off dev mode - no more 'enter to skip'
+testing_mode = True # Turned off dev mode - no more 'enter to skip'

@@ -4,7 +4,7 @@
         "i": 0
     },
     "What language uses .js files?": {
-        "c": 0,
+        "c": 1,
         "i": 2
     },
     "What does .dmg stand for?": {
@@ -45,7 +45,7 @@
     },
     "What is the default file system for macOS High Sierra and later?": {
         "c": 6,
-        "i": 11
+        "i": 12
     },
     "What utility is used to manage disks and storage on macOS?": {
         "c": 6,
@@ -65,7 +65,7 @@
     },
     "What is the name of the macOS virtual desktop feature?": {
         "c": 12,
-        "i": 15
+        "i": 16
     },
     "What menu does Command + Option + Esc bring up?": {
         "c": 12,
@@ -84,11 +84,11 @@
         "i": 1
     },
     "perro": {
-        "c": 4,
+        "c": 5,
         "i": 60
     },
     "libro": {
-        "c": 66,
+        "c": 67,
         "i": 59
     },
     "casa": {
@@ -104,7 +104,7 @@
         "i": 59
     },
     "sol": {
-        "c": 64,
+        "c": 65,
         "i": 49
     },
     "luna": {
@@ -128,7 +128,7 @@
         "i": 39
     },
     "mar": {
-        "c": 6,
+        "c": 7,
         "i": 39
     },
     "estrella": {
@@ -145,7 +145,7 @@
     },
     "rio": {
         "c": 4,
-        "i": 2
+        "i": 3
     },
     "montana": {
         "c": 5,

@@ -6,7 +6,8 @@ import sys # Editing line after being printed
 import random # Shuffle flashcards
 from playsound import playsound # Sound effects
 from settings import * # Import all settings from 'settings.py'
-from text_to_speech import narrate as say # Multi-lingual voice to speak cards and results (hosted in project directory)
+speak_cards = False # Temp fix
+# from text_to_speech import narrate as say # Multi-lingual voice to speak cards and results (hosted in project directory)
 
 ### Custom function definitions ###
 def clear(message_after_refresh=None):
@@ -294,7 +295,7 @@ def run_flashcards():
         # Speak card (setting logic in other file)
         card = card.removesuffix("\" in English?")
         card = card.removeprefix("What is \"")
-        say(card, lang)
+        # say(card, lang)
 
         usr_input = input(f"Your answer: ") # Show prompt and get input
 
